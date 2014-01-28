@@ -19,32 +19,48 @@ describe Grid do
 
 	context "Finding out rows" do
 
-		it "row(0) should give the solved numbers from row 1" do
+		it "own_row(0) should give the solved numbers from row 1" do
 			expect(grid.own_row(0)).to eq([1,5,3,2]) 
 		end
 
-		it "row(9) should give the solved numbers from row 2" do
+		it "own_row(9) should give the solved numbers from row 2" do
 			expect(grid.own_row(9)).to eq([1,9,6]) 
 		end
 
-		it "row(12) should give the solved numbers from row 2" do
+		it "own_row(12) should give the solved numbers from row 2" do
 			expect(grid.own_row(12)).to eq([1,9,6]) 
 		end
 	end
 
 	context "Finding out columns" do
 
-		it "column(27) should give the solved numbers from column 1" do
+		it "own_column(27) should give the solved numbers from column 1" do
 			expect(grid.own_column(27)).to eq([2,4,5,9,8]) 
 		end
 
-		it "column(10) should give the solved numbers from column 2" do
+		it "own_column(10) should give the solved numbers from column 2" do
 			expect(grid.own_column(10)).to eq([1,7,9,6,3]) 
 		end
 
-		it "column(80) should give the solved numbers from column 9" do
+		it "own_column(80) should give the solved numbers from column 9" do
 			expect(grid.own_column(80)).to eq([2,6,7,5]) 
 		end
 	end
+
+	context "Finding out the box" do
+		it "own_box(0) should give the solved numbers from box 1A" do
+			expect(grid.own_box(0)).to eq([1,5,2,7]) 
+		end
+
+		it "own_box(27) should give the solved numbers from box 1B" do
+			expect(grid.own_box(27)).to eq([4,9,5,1,3]) 
+		end
+
+		it "own_box(80) should give the solved numbers from box 3A" do
+			expect(grid.own_box(26)).to eq([2, 9, 6, 4,3]) 
+		end
+
+	end
+
 
 end
