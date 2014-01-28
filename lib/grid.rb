@@ -10,17 +10,29 @@ class Grid
 	attr_accessor :cells
 
 
-	def row(cell_index)
-		cell_index = cell_index - cell_index % ROWS_MAX_SIZE
-		self.cells[(cell_index)..(cell_index+8)].map {|cell| cell.value }.select {|cell| cell > 0}
+	def own_row(cell_index)
+		row_number = cell_index / ROWS_MAX_SIZE
+		rows[row_number].map {|cell| cell.value}.select {|cell| cell > 0}
 	end
+
+	def own_column(cell_index)
+		column_number = cell_index % ROWS_MAX_SIZE
+		columns[column_number].map {|cell| cell.value}.select {|cell| cell > 0}
+	end
+
+	def rows
+		cells.each_slice(9).to_a
+	end
+
+	def columns
+		rows.transpose
+	end
+
+
+
 
 	def solved?
 		cells.all? {|cell| cell.solved? }
 	end
-
-
-
-
 
 end
