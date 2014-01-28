@@ -3,8 +3,8 @@ class Grid
 	ROWS_MAX_SIZE = 9
 	BOX = 3
 	
-	def initialize(value)
-		@cells = value.split(//).map {|cell_value| Cell.new(cell_value) }
+	def initialize(puzzle_values)
+		@cells = puzzle_values.split(//).map {|cell_value| Cell.new(cell_value) }
 	end
 
 	attr_accessor :cells
@@ -27,9 +27,6 @@ class Grid
 	def columns
 		rows.transpose
 	end
-
-
-
 
 	def solved?
 		cells.all? {|cell| cell.solved? }
