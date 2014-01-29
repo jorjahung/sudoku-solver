@@ -13,7 +13,7 @@ class Cell
 	end
 
 	def candidates=(v)
-		@value = v.first if v.length == 1
+		# @value = v.first if v.length == 1
 		@candidates = v
 	end
 
