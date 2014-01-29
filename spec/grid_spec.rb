@@ -59,8 +59,15 @@ describe Grid do
 		it "own_box(80) should give the solved numbers from box 3A" do
 			expect(grid.own_box(26)).to eq([2, 9, 6, 4,3]) 
 		end
-
 	end
 
+	context "Solving the sudoku" do
+		it "should solve the sudoku" do
+			expect(grid).to_not be_solved
+			grid.solve
+			expect(grid).to be_solved
+			expect(grid.to_s).to eq('615493872348127956279568431496832517521746389783915264952681743864379125137254698')
+		end
+	end
 
 end

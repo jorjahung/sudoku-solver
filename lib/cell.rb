@@ -12,11 +12,13 @@ class Cell
 		value !=0
 	end
 
-	def candidates
-
+	def candidates=(v)
+		@value = v.first if v.length == 1
+		@candidates = v
 	end
 
-	def solve
+	def update!(row, column, box)
+		return if solved?
+		self.candidates = (1..9).to_a - row - column - box
 	end
-	
 end

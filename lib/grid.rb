@@ -2,14 +2,37 @@ class Grid
 
 	ROWS_MAX_SIZE = 9
 	BOX_SIZE = 3
-	
+	SIZE = 81
+
 	def initialize(puzzle_values)
+		raise "Wrong number of values given: #{puzzle_values.length} out of #{SIZE} given" unless puzzle_values.length == SIZE
 		@cells = puzzle_values.chars.map {|cell_value| Cell.new(cell_value) }
 	end
 
 	attr_accessor :cells
 
+	def solve
+		outstanding_before, looping = SIZE, false
+		while !solved? && !looping
+			try_to_solve
+			outstanding = @cells.count {|c| c.solved?}
+			looping = outstanding_before == outstanding
+			outstanding_before = outstanding
+		end
+	end
 
+	def try_to_solve
+		while !solved? do
+			cells.each_with_index do |cell, i|
+				cell.update!(own_row(i), own_column(i), own_box(i))
+			end
+		end
+	end
+		
+	def to_s
+		cells.map {|cell| cell.value}.join
+	end
+		
 	def own_row(cell_index)
 		row_number = cell_index / ROWS_MAX_SIZE
 		rows[row_number].map {|cell| cell.value}.select {|cell| cell > 0}
