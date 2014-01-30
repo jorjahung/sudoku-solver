@@ -5,7 +5,7 @@ class Cell
 		@candidates = []
 	end
 	
-	attr_accessor :value
+	attr_accessor :value, :candidates
 
 
 	def solved?
@@ -13,8 +13,12 @@ class Cell
 	end
 
 	def candidates=(v)
-		@value = v.first if v.length == 1
 		@candidates = v
+		@value = v.first if v.length == 1
+	end
+
+	def assume(v) 
+		@value = v 
 	end
 
 	def update!(row, column, box)

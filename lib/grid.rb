@@ -19,20 +19,41 @@ class Grid
 			looping = outstanding_before == outstanding
 			outstanding_before = outstanding
 		end
+		try_harder unless solved?
 	end
 
 	def try_to_solve
-		while !solved? do
-			cells.each_with_index do |cell, i|
+		cells.each_with_index do |cell, i|
 				cell.update!(own_row(i), own_column(i), own_box(i))
-			end
 		end
+	end
+
+	def try_harder
+		blank_cell = cells.find {|cell| !cell.solved? }
+		blank_cell.candidates.each do |candidate|
+			blank_cell.assume(candidate)
+			replicated_board = self.replicate
+			replicated_board.solve
+			steal_solution(replicated_board) and return if replicated_board.solved?
+		end
+	end
+
+	def steal_solution(new_board)
+		cells.replace(new_board.cells)
+	end
+
+	def replicate
+		self.class.new(self.to_s)
 	end
 		
 	def to_s
 		cells.map {|cell| cell.value}.join
 	end
 		
+	def solved?
+		cells.all? {|cell| cell.solved? }
+	end
+
 	def own_row(cell_index)
 		row_number = cell_index / ROWS_MAX_SIZE
 		rows[row_number].map {|cell| cell.value}.select {|cell| cell > 0}
@@ -76,8 +97,6 @@ class Grid
 		rows.transpose
 	end
 
-	def solved?
-		cells.all? {|cell| cell.solved? }
-	end
+
 
 end
